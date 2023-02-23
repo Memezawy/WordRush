@@ -23,15 +23,14 @@ public class PlayerMotionManager : MonoBehaviour
     private void Update()
     {
         AssignInput();
-        HandleJump();
+        UpdateGroundState();
         HandleAnimation();
+        HandleMoving();
+        HandleJump();
     }
 
     private void FixedUpdate()
     {
-        UpdateGroundState();
-
-        HandleMoving();
     }
 
 
@@ -84,17 +83,18 @@ public class PlayerMotionManager : MonoBehaviour
 
     [Header("Jumping")]
     [SerializeField] private float _jumpForce;
+    [SerializeField] private float _minJumpVelocity;
     [SerializeField] private float _fallSpeed;
 
-    private bool jumpInputDown, jumpInputUp;
+    private bool _jumpInputDown, _jumpInputUp;
 
     private void HandleJump()
     {
-        if (jumpInputDown && _isGrounded)
+        if (_jumpInputDown && _isGrounded)
         {
             Jump();
         }
-        if (jumpInputUp && _physicsController.VelocityY > 0.1f) // Let go while in-air
+        if (_jumpInputUp && _physicsController.VelocityY > _minJumpVelocity) // Let go while in-air
         {
             // The fall force is then handled by the system normally
             _physicsController.SetVelocity(_physicsController.VelocityX, 0f);
@@ -111,15 +111,17 @@ public class PlayerMotionManager : MonoBehaviour
     {
         _physicsController.SetLinerDrag(0);
         _physicsController.AddForce(0f, _jumpForce);
-        //SoundManager.Instance.PlaySound(_jumpSoundEffect);
     }
     #endregion
 
     private void HandleAnimation()
     {
         _animator.SetBool("IsRunning", IsMoving);
-        _animator.SetBool("IsAirborne", _physicsController.VelocityY > 0);
-        _animator.SetBool("IsFalling", _physicsController.VelocityY < 0);
+        if (_jumpInputDown)
+        {
+            _animator.SetTrigger("Jump");
+        }
+        _animator.SetBool("IsFalling", _physicsController.VelocityY <= 0 && !_isGrounded);
 
         if (_movementVector.x > 0)
             LookRight();
@@ -131,14 +133,14 @@ public class PlayerMotionManager : MonoBehaviour
     private void AssignInput()
     {
         _movementVector = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        jumpInputDown = Input.GetKeyDown(KeyCode.Space);
-        jumpInputUp = Input.GetKeyUp(KeyCode.Space);
+        _jumpInputDown = Input.GetKeyDown(KeyCode.Space);
+        _jumpInputUp = Input.GetKeyUp(KeyCode.Space);
     }
 
     private void UpdateGroundState()
     {
         _isGrounded = Physics2D.OverlapBox(new Vector2(transform.position.x, transform.position.y - _groundDistance),
-                new Vector2(0.5f, 0.2f), 0f, _groundMask) && _physicsController.VelocityY == 0;
+                new Vector2(0.5f, 0.2f), 0f, _groundMask);
     }
 
     public void LookRight()

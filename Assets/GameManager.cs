@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AudioClip music;
     void Start()
     {
-
+        SoundManager.Instance.SetMusic(music);
     }
 
 }
