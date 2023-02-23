@@ -4,36 +4,32 @@ using UnityEngine;
 public class PlayerMotionManager : MonoBehaviour
 {
     [SerializeField] private LayerMask _groundMask;
+    [SerializeField] private float _groundDistance;
     private PhysicsController _physicsController;
-    private float _groundDistance;
+    private Animator _animator;
     private bool _isGrounded;
 
     // Input
-    private Vector2 movementVector;
-
+    private Vector2 _movementVector;
     private float _lastInputDir; // For when the player changes dir it's updated
-
-    public bool Moving { get; private set; }
+    public bool IsMoving { get; private set; }
 
     private void Start()
     {
         _physicsController = GetComponent<PhysicsController>();
-        _groundDistance = transform.lossyScale.x / 2;
+        _animator = GetComponent<Animator>();
     }
-
 
     private void Update()
     {
         AssignInput();
         HandleJump();
+        HandleAnimation();
     }
 
     private void FixedUpdate()
     {
         UpdateGroundState();
-
-
-        //HandleDash();
 
         HandleMoving();
     }
@@ -44,22 +40,21 @@ public class PlayerMotionManager : MonoBehaviour
     [Header("Walking")]
     [SerializeField] private float _speed;
     [SerializeField] private float _linerDrag = 1f;
-    [SerializeField] private AudioClip _walkingSoundEffect;
 
     private void HandleMoving()
     {
 
-        if ((movementVector.x != 0 && !Moving) ||
-            (_lastInputDir != movementVector.x && movementVector.x != 0)) // Incase of a change in dir without stopping. (not best fix)
+        if ((_movementVector.x != 0 && !IsMoving) ||
+            (_lastInputDir != _movementVector.x && _movementVector.x != 0)) // Incase of a change in dir without stopping. (not best fix)
         {
             StartMoving();
-            _lastInputDir = movementVector.x;
+            _lastInputDir = _movementVector.x;
         }
-        else if (movementVector.x == 0 && !_isDashing)
+        else if (_movementVector.x == 0)
         {
             StopMoving();
         }
-        if (movementVector.x != 0 && Mathf.Abs(_physicsController.VelocityX) < _speed)
+        if (_movementVector.x != 0 && Mathf.Abs(_physicsController.VelocityX) < _speed)
         {
             StartMoving();
         }
@@ -68,18 +63,18 @@ public class PlayerMotionManager : MonoBehaviour
     private void StartMoving()
     {
         _physicsController.SetLinerDrag(0);
-        _physicsController.SetVelocity(_speed * movementVector.x, _physicsController.VelocityY);
-        Moving = true;
+        _physicsController.SetVelocity(_speed * _movementVector.x, _physicsController.VelocityY);
+        IsMoving = true;
     }
 
     public void StopMoving()
     {
         // only states were we would want to stop the body
-        if (Moving || _isDashing)
+        if (IsMoving)
         {
             _physicsController.SetLinerDrag(_linerDrag);
             _physicsController.StopTheBody();
-            Moving = false;
+            IsMoving = false;
         }
     }
 
@@ -90,7 +85,6 @@ public class PlayerMotionManager : MonoBehaviour
     [Header("Jumping")]
     [SerializeField] private float _jumpForce;
     [SerializeField] private float _fallSpeed;
-    [SerializeField] private AudioClip _jumpSoundEffect;
 
     private bool jumpInputDown, jumpInputUp;
 
@@ -121,79 +115,22 @@ public class PlayerMotionManager : MonoBehaviour
     }
     #endregion
 
-    #region Dash
-
-    [Header("Dash")]
-    [SerializeField] private AnimationCurve _dashCurve;
-    [SerializeField] private float _dashDistance, _dashCoolDown, _dashForce;
-    [SerializeField] private AudioClip _dashSoundEffect;
-    private Vector2 _dashStartPos;
-    private float _nextDashTime;
-    private bool _isDashing;
-    private bool dashInputDown, dashInputUp;
-
-
-    private void HandleDash()
+    private void HandleAnimation()
     {
-        if (dashInputDown && Time.time >= _nextDashTime)
-        {
-            StartDash();
-        }
-        // Still Didn't Fully dash
-        if (_isDashing)// && Vector2.Distance(_transform.position, _dashStartPos) < _dashDistance)
-        {
-            Dash();
-        }
-        // Stop Dashing (the _isDashing to make sure we're not always stopping the dash but only stopping it once)
-        if (Vector2.Distance(transform.position, _dashStartPos) >= _dashDistance && _isDashing)
-        {
-            EndDash();
-        }
+        _animator.SetBool("IsRunning", IsMoving);
+        _animator.SetBool("IsAirborne", _physicsController.VelocityY > 0);
+        _animator.SetBool("IsFalling", _physicsController.VelocityY < 0);
+
+        if (_movementVector.x > 0)
+            LookRight();
+        else if (_movementVector.x < 0) // Else if so that when we're not moving it doesn't just set to a default rotation.
+            LookLeft();
+
     }
-
-    public void StartDash()
-    {
-        _isDashing = true;
-        _dashStartPos = transform.position;
-        _nextDashTime = Time.time + _dashCoolDown; // Apply cooldown (consider the time it will take to dash)
-        _physicsController.SetGravity(0); // so that the player can stay mid-air
-        //SoundManager.Instance.PlaySound(_dashSoundEffect);
-    }
-
-    private void Dash()
-    {
-        // Basiclly getting the percentage of distance left then evalutaing it.
-        float dashForce = _dashCurve.Evaluate(Vector2.Distance(transform.position, _dashStartPos) / _dashDistance) * _dashForce;
-        float dashVector;
-        if (_physicsController.VelocityX == 0)
-        {
-            dashVector = dashForce * base.transform.right.x;
-        }
-        else
-        {
-            // Dashes in the dir of motion.
-            // so that the value is either 1 or -1.
-            dashVector = dashForce * (_physicsController.VelocityX / Mathf.Abs(_physicsController.VelocityX));
-        }
-        _physicsController.AddForce(dashVector, 0f);
-    }
-
-    private void EndDash()
-    {
-        StopMoving();
-        _physicsController.SetGravity(_physicsController.DefualtGravity);
-        _isDashing = false;
-    }
-
-    #endregion
-
-
 
     private void AssignInput()
     {
-        movementVector = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        dashInputDown = Input.GetKeyDown(KeyCode.LeftShift);
-        dashInputUp = Input.GetKeyUp(KeyCode.LeftShift);
+        _movementVector = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         jumpInputDown = Input.GetKeyDown(KeyCode.Space);
         jumpInputUp = Input.GetKeyUp(KeyCode.Space);
     }
