@@ -29,11 +29,6 @@ public class PlayerMotionManager : MonoBehaviour
         HandleJump();
     }
 
-    private void FixedUpdate()
-    {
-    }
-
-
     #region Movement
 
     [Header("Walking")]
@@ -94,7 +89,7 @@ public class PlayerMotionManager : MonoBehaviour
         {
             Jump();
         }
-        if (_jumpInputUp && _physicsController.VelocityY > _minJumpVelocity) // Let go while in-air
+        if (_jumpInputUp && _physicsController.VelocityY > 0) // Let go while in-air going up.
         {
             // The fall force is then handled by the system normally
             _physicsController.SetVelocity(_physicsController.VelocityX, 0f);
