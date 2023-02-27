@@ -14,14 +14,11 @@ public class LevelManager : MonoBehaviour
     private void Awake()
     {
         if (Instance == null)
+        {
             Instance = this;
+        }
         else
             Destroy(gameObject);
-    }
-
-    private void OnEnable()
-    {
-        OnLevelEnd += EndLevel;
     }
     public bool TryCollectLetter(LetterClass letter)
     {
@@ -37,14 +34,4 @@ public class LevelManager : MonoBehaviour
         else
             return false;
     }
-    private void EndLevel()
-    {
-        print("Game over");
-    }
-
-    private void OnDisable()
-    {
-        OnLevelEnd += EndLevel;
-    }
-
 }

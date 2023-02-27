@@ -15,6 +15,7 @@ public class SoundManager : MonoBehaviour
             Instance = this;
         else
             Destroy(gameObject);
+        DontDestroyOnLoad(gameObject);
     }
 
     public void PlaySound(AudioClip clip)
@@ -23,6 +24,7 @@ public class SoundManager : MonoBehaviour
     }
     public void SetMusic(AudioClip music)
     {
+        musicSource.Stop();
         musicSource.PlayOneShot(music);
     }
 
