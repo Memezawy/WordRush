@@ -14,10 +14,11 @@ public class GameManager : MonoBehaviour
         SoundManager.Instance.SetMusic(music);
     }
 
-    private void OnCollect()
+    private void OnCollect(LetterClass letter)
     {
-        print("Collected");
+        print("Collected " + letter.Letter);
     }
+
 
     private void OnDisable()
     {

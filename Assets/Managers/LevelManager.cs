@@ -19,12 +19,16 @@ public class LevelManager : MonoBehaviour
             Destroy(gameObject);
     }
 
+    private void OnEnable()
+    {
+        OnLevelEnd += EndLevel;
+    }
     public bool TryCollectLetter(LetterClass letter)
     {
-        if (letter.Letter == LevelWord.ToCharArray()[CurrentLetterIndex])
+        if (letter.Letter.ToString().ToUpper() == LevelWord.ToCharArray()[CurrentLetterIndex].ToString().ToUpper())
         {
             CurrentLetterIndex++;
-            if (CurrentLetterIndex >= LevelWord.Length)
+            if (CurrentLetterIndex > (LevelWord.Length - 1))
             {
                 OnLevelEnd();
             }
@@ -33,4 +37,14 @@ public class LevelManager : MonoBehaviour
         else
             return false;
     }
+    private void EndLevel()
+    {
+        print("Game over");
+    }
+
+    private void OnDisable()
+    {
+        OnLevelEnd += EndLevel;
+    }
+
 }

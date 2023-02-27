@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
-    public event Action OnLetterCollect;
+    public event Action<LetterClass> OnLetterCollect;
     public static PlayerManager Instance { get; private set; }
     private void Awake()
     {
@@ -15,16 +15,16 @@ public class PlayerManager : MonoBehaviour
             Destroy(gameObject);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        Collider2D _collider = collision.collider;
+        Collider2D _collider = other;
         if (_collider.CompareTag("Letter"))
         {
-            var _level = _collider.GetComponent<LetterClass>();
-            var _isValid = LevelManager.Instance.TryCollectLetter(_level);
+            var _letter = _collider.GetComponent<LetterClass>();
+            var _isValid = LevelManager.Instance.TryCollectLetter(_letter);
             if (_isValid)
             {
-                OnLetterCollect();
+                OnLetterCollect(_letter);
                 Destroy(_collider.gameObject);
             }
         }

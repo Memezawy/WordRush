@@ -111,12 +111,10 @@ public class PlayerMotionManager : MonoBehaviour
 
     private void HandleAnimation()
     {
-        _animator.SetBool("IsRunning", IsMoving);
-        if (_jumpInputDown)
-        {
-            _animator.SetTrigger("Jump");
-        }
-        _animator.SetBool("IsFalling", _physicsController.VelocityY <= 0 && !_isGrounded);
+        _animator.SetBool("IsGrounded", _isGrounded);
+        _animator.SetFloat("VerticalVelocity", _physicsController.VelocityY);
+        _animator.SetFloat("HorizontalSpeed", Mathf.Abs(_physicsController.VelocityX));
+
 
         if (_movementVector.x > 0)
             LookRight();
