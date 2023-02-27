@@ -7,6 +7,15 @@ public class PlayerAudioManager : MonoBehaviour
     [SerializeField] private AudioClip stepSFX, jumpSFX;
     [SerializeField] private AudioSource audioSource;
 
+    public static PlayerAudioManager Instance;
+    private void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(gameObject);
+    }
+
     public void PlayerStepSound()
     {
         audioSource.PlayOneShot(stepSFX);
