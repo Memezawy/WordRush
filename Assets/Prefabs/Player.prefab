@@ -179,7 +179,7 @@ MonoBehaviour:
   _groundDistance: 0.8
   _speed: 10
   _linerDrag: 1
-  _jumpForce: 10
+  _jumpForce: 13
   _minJumpVelocity: 3
   _fallSpeed: 75
 --- !u!114 &1944885828091991484
@@ -196,6 +196,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stepSFX: {fileID: 8300000, guid: dde0ea4fbbb8f64479a72bb85d353422, type: 3}
   jumpSFX: {fileID: 8300000, guid: b2cc5dabb69299048a1937baace13639, type: 3}
+  collectSFX: {fileID: 8300000, guid: 3800ebd472236e942a4115db3d711673, type: 3}
   audioSource: {fileID: 1944885828091991487}
 --- !u!82 &1944885828091991487
 AudioSource:

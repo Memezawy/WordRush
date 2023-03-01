@@ -5,7 +5,9 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private AudioClip music;
+    public bool IsPaused { get; private set; }
     public static GameManager Instance { get; private set; }
+
     private void Awake()
     {
         if (Instance == null)
@@ -18,25 +20,20 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    private void OnEnable()
-    {
-        PlayerManager.Instance.OnLetterCollect += OnCollect;
-    }
     private void Start()
     {
         SoundManager.Instance.SetMusic(music);
     }
 
-    private void OnCollect(LetterClass letter)
+    public void PauseGame()
     {
-        print("Collected " + letter.Letter);
+        Time.timeScale = 0f;
+        IsPaused = true;
     }
 
-
-    private void OnDisable()
+    public void ResumeGame()
     {
-        PlayerManager.Instance.OnLetterCollect -= OnCollect;
+        Time.timeScale = 1f;
+        IsPaused = false;
     }
-
-
 }

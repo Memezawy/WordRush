@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class PlayerAudioManager : MonoBehaviour
 {
-    [SerializeField] private AudioClip stepSFX, jumpSFX;
-    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip stepSFX, jumpSFX, collectSFX;
 
     public static PlayerAudioManager Instance;
     private void Awake()
@@ -16,13 +15,24 @@ public class PlayerAudioManager : MonoBehaviour
             Destroy(gameObject);
     }
 
+    private void OnEnable()
+    {
+        PlayerManager.Instance.OnLetterCollect += PlayCollectSound;
+    }
+
+    private void PlayCollectSound(LetterClass _)
+    {
+        SoundManager.Instance.PlaySound(collectSFX);
+    }
+
+
     public void PlayerStepSound()
     {
-        audioSource.PlayOneShot(stepSFX);
+        SoundManager.Instance.PlaySound(stepSFX);
     }
 
     public void PlayerJumpSound()
     {
-        audioSource.PlayOneShot(jumpSFX);
+        SoundManager.Instance.PlaySound(jumpSFX);
     }
 }
