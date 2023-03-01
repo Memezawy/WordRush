@@ -33,7 +33,7 @@ public class PlayerMotionManager : MonoBehaviour
 
     [Header("Walking")]
     [SerializeField] private float _speed;
-    [SerializeField] private float _linerDrag = 1f;
+    //[SerializeField] private float _linerDrag = 1f;
 
     private void HandleMoving()
     {

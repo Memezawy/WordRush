@@ -15,7 +15,10 @@ public class GameManager : MonoBehaviour
             Instance = this;
         }
         else
-            Destroy(gameObject);
+        {
+            Destroy(Instance.gameObject);
+            Instance = this;
+        }
 
         DontDestroyOnLoad(gameObject);
     }
@@ -35,5 +38,11 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         IsPaused = false;
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
+        print("GameExited");
     }
 }
