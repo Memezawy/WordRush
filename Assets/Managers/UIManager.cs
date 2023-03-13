@@ -49,8 +49,14 @@ public class UIManager : MonoBehaviour
 
     private void OnLetterCollect(LetterClass letter)
     {
+<<<<<<< Updated upstream
         levelWordText.text = Utiles.ReplaceCharWithString(levelWordText.text, letter.Letter,
          $"<color=#{ColorUtility.ToHtmlStringRGBA(foundColor)}>{letter.Letter}</color>");
+=======
+        levelWordText.text = ReplaceCharWithString(letter.Letter,
+         $"<color=#{ColorUtility.ToHtmlStringRGBA(foundColor)}>{letter.Letter}</color>");
+        // <color=#FFFFFF>P</color>
+>>>>>>> Stashed changes
     }
 
 
@@ -59,4 +65,27 @@ public class UIManager : MonoBehaviour
         PlayerManager.Instance.OnLetterCollect += OnLetterCollect;
     }
 
+<<<<<<< Updated upstream
+=======
+    private string ReplaceCharWithString(char charToReplace, string stringToReplaceWith)
+    {
+        // Split the original string into an array of characters
+
+        char[] chars = levelWordText.text.ToCharArray();
+
+        // Loop through each character in the array
+        for (int i = 0; i < chars.Length; i++)
+        {
+            // If the character matches the one we want to replace
+            if (chars[i] == charToReplace)
+            {
+                // Remove the character and insert the new string
+                levelWordText.text = levelWordText.text.Remove(i, 1).Insert(i, stringToReplaceWith);
+                i += stringToReplaceWith.Length - 1; // Adjust index for the added length
+            }
+        }
+
+        return levelWordText.text;
+    }
+>>>>>>> Stashed changes
 }
