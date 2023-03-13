@@ -152,12 +152,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e43e8ec705b29134380d5e0d780a2729, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentLetterIndex: 0
-  letters:
-  - {fileID: 2051346331693293591}
-  - {fileID: 965988205}
-  - {fileID: 1717732443}
   LevelWord: Dog
+  letters: []
+  CurrentLetterIndex: 0
 --- !u!4 &21826349
 Transform:
   m_ObjectHideFlags: 0
@@ -834,17 +831,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d7ced6142a5902048a74289b90e62364, type: 3}
---- !u!114 &965988205 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2051346331903583134, guid: d7ced6142a5902048a74289b90e62364, type: 3}
-  m_PrefabInstance: {fileID: 965988204}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ecd6fbefdbdbd4499438bd6a4ea1d09, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1077056295
 GameObject:
   m_ObjectHideFlags: 0
@@ -1050,8 +1036,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29675537b36304649b5a554e566c50d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mixer: {fileID: 0}
   musicSource: {fileID: 1820329199}
   effectsSource: {fileID: 1077056296}
+  musicSlider: {fileID: 0}
+  sfxSlider: {fileID: 0}
 --- !u!4 &1314473348
 Transform:
   m_ObjectHideFlags: 0
@@ -1898,6 +1887,7 @@ MonoBehaviour:
     serializedVersion: 2
     rgba: 4294967295
   pauseMenu: {fileID: 25269805}
+  settingsMenu: {fileID: 0}
 --- !u!1001 &1717732442
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2011,17 +2001,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d7ced6142a5902048a74289b90e62364, type: 3}
---- !u!114 &1717732443 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2051346331903583134, guid: d7ced6142a5902048a74289b90e62364, type: 3}
-  m_PrefabInstance: {fileID: 1717732442}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ecd6fbefdbdbd4499438bd6a4ea1d09, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1733168567
 GameObject:
   m_ObjectHideFlags: 0
@@ -11166,7 +11145,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -11426,17 +11405,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d7ced6142a5902048a74289b90e62364, type: 3}
---- !u!114 &2051346331693293591 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2051346331903583134, guid: d7ced6142a5902048a74289b90e62364, type: 3}
-  m_PrefabInstance: {fileID: 2051346331693293590}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ecd6fbefdbdbd4499438bd6a4ea1d09, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &6777271346882971601
 PrefabInstance:
   m_ObjectHideFlags: 0
