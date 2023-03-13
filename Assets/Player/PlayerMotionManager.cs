@@ -33,6 +33,7 @@ public class PlayerMotionManager : MonoBehaviour
 
     [Header("Walking")]
     [SerializeField] private float _speed;
+<<<<<<< Updated upstream
     //[SerializeField] private float _linerDrag = 1f;
 
     private void HandleMoving()
@@ -56,7 +57,6 @@ public class PlayerMotionManager : MonoBehaviour
 
     private void StartMoving()
     {
-        //_physicsController.SetLinerDrag(0);
         _physicsController.SetVelocity(_speed * _movementVector.x, _physicsController.VelocityY);
         IsMoving = true;
     }
@@ -66,7 +66,6 @@ public class PlayerMotionManager : MonoBehaviour
         // only states were we would want to stop the body
         if (IsMoving)
         {
-            //_physicsController.SetLinerDrag(_linerDrag);
             _physicsController.StopTheBody();
             IsMoving = false;
         }
@@ -96,7 +95,6 @@ public class PlayerMotionManager : MonoBehaviour
         }
         if (_physicsController.IsFalling && !_isGrounded) // Falling
         {
-            //_physicsController.SetLinerDrag(0);
             // Bec this state is continuios.
             _physicsController.AddForce(0, -_fallSpeed * Time.deltaTime);
         }
@@ -104,8 +102,6 @@ public class PlayerMotionManager : MonoBehaviour
 
     private void Jump()
     {
-        // why am i changing the drag?
-        //_physicsController.SetLinerDrag(1);
         _physicsController.AddForce(0f, _jumpForce);
     }
     #endregion

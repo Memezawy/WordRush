@@ -11,6 +11,7 @@ public class LetterClass : MonoBehaviour
     private float animationOffset;
     private void Start()
     {
+        gameObject.name = "Letter " + Letter;
         text = GetComponent<TMP_Text>();
         text.text = Letter.ToString();
         originalPos = transform.position;
