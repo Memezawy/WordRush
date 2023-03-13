@@ -20,7 +20,6 @@ public static class Utiles
                 i += stringToReplaceWith.Length - 1; // Adjust index for the added length
             }
         }
-
         return originalString;
     }
 

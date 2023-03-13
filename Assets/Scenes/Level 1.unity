@@ -165,8 +165,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LevelWord: Pet
   letters:
-  - {fileID: 1392166799}
-  - {fileID: 667160543}
+  - {fileID: 2051346331693293591}
+  - {fileID: 965988205}
   - {fileID: 18948594}
   CurrentLetterIndex: 0
 --- !u!4 &21826349
@@ -1629,6 +1629,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d7ced6142a5902048a74289b90e62364, type: 3}
+--- !u!114 &965988205 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2051346331903583134, guid: d7ced6142a5902048a74289b90e62364, type: 3}
+  m_PrefabInstance: {fileID: 965988204}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ecd6fbefdbdbd4499438bd6a4ea1d09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1077056295
 GameObject:
   m_ObjectHideFlags: 0
@@ -13278,6 +13289,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d7ced6142a5902048a74289b90e62364, type: 3}
+--- !u!114 &2051346331693293591 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2051346331903583134, guid: d7ced6142a5902048a74289b90e62364, type: 3}
+  m_PrefabInstance: {fileID: 2051346331693293590}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ecd6fbefdbdbd4499438bd6a4ea1d09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6777271346882971601
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -11,7 +11,7 @@ public class UIManager : MonoBehaviour
 
 
     private string levelWord;
-
+    private string[] letterArray;
 
     private void OnEnable()
     {
@@ -23,6 +23,9 @@ public class UIManager : MonoBehaviour
         levelWord = LevelManager.Instance.LevelWord;
         levelWordText.text = levelWord;
         levelWordText.color = notFoundColor;
+        letterArray = new string[levelWord.Length];
+        for (int i = 0; i < levelWord.Length; i++)
+            letterArray[i] = levelWord[i].ToString();
         pauseMenu.SetActive(false);
         settingsMenu.SetActive(false);
     }
@@ -49,10 +52,22 @@ public class UIManager : MonoBehaviour
 
     private void OnLetterCollect(LetterClass letter)
     {
-        levelWordText.text = Utiles.ReplaceCharWithString(levelWordText.text, letter.Letter,
-         $"<color=#{ColorUtility.ToHtmlStringRGBA(foundColor)}>{letter.Letter}</color>");
+        var letterIndex = levelWord.IndexOf(letter.Letter);
+        var newString = $"<color=#{ColorUtility.ToHtmlStringRGBA(foundColor)}>{letter.Letter}</color>";
+        levelWordText.text = Replace(letterIndex, newString);
     }
 
+    private string Replace(int letterIndex, string newString)
+    {
+        letterArray[letterIndex] = newString;
+
+        string s = "";
+        foreach (var letter in letterArray)
+        {
+            s += letter;
+        }
+        return s;
+    }
 
     private void OnDisable()
     {

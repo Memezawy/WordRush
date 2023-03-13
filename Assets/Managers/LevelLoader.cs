@@ -16,11 +16,7 @@ public class LevelLoader : MonoBehaviour
 
     public void GoToNextLevel()
     {
-        if (SceneManager.sceneCountInBuildSettings > SceneManager.GetActiveScene().buildIndex + 1)
-        {
-            print("Load");
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        }
+        SceneManager.LoadScene((SceneManager.GetActiveScene().buildIndex + 1) % SceneManager.sceneCountInBuildSettings);
     }
     public void ReloadCurrentLevel()
     {
