@@ -9,7 +9,6 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private LetterClass[] letters;
     [HideInInspector] public int CurrentLetterIndex = 0;
     public event Action OnLevelEnd;
-
     public static LevelManager Instance { get; private set; }
     private void Awake()
     {

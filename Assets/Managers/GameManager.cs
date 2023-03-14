@@ -1,31 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private AudioClip music;
+    [SerializeField] private UnityEvent<Scene, LoadSceneMode> onLevelChange;
     public bool IsPaused { get; private set; }
     public static GameManager Instance { get; private set; }
 
+
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
+        if (Instance != null)
+            Destroy(gameObject);
         else
-        {
-            Destroy(Instance.gameObject);
             Instance = this;
-        }
 
         DontDestroyOnLoad(gameObject);
+        SceneManager.sceneLoaded += onLevelChange.Invoke;
+
     }
 
     private void Start()
     {
-        SoundManager.Instance.SetMusic(music);
+        if (!SoundManager.Instance.IsPlayingMusic)
+            SoundManager.Instance.SetMusic(music);
     }
 
     public void PauseGame()
@@ -38,6 +40,15 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         IsPaused = false;
+    }
+
+    public void GoToNextLevel()
+    {
+        SceneManager.LoadScene((SceneManager.GetActiveScene().buildIndex + 1) % SceneManager.sceneCountInBuildSettings);
+    }
+    public void ReloadCurrentLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void ExitGame()

@@ -32,7 +32,7 @@ public class EndGate : MonoBehaviour
     {
         if (other.CompareTag("Player") && canPass)
         {
-            LevelLoader.Instance?.GoToNextLevel();
+            GameManager.Instance?.GoToNextLevel();
         }
     }
 

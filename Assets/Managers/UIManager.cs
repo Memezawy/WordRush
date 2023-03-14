@@ -8,24 +8,21 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_Text levelWordText;
     [SerializeField] private Color32 notFoundColor, foundColor;
     [SerializeField] private GameObject pauseMenu, settingsMenu;
-
-
+    public static UIManager Instance { get; private set; }
     private string levelWord;
     private string[] letterArray;
 
-    private void OnEnable()
+    private void Awake()
     {
-        //PlayerManager.Instance.OnLetterCollect += OnLetterCollect;
+        if (Instance != null)
+            Destroy(gameObject);
+        else
+            Instance = this;
     }
 
     private void Start()
     {
-        levelWord = LevelManager.Instance.LevelWord;
-        levelWordText.text = levelWord;
-        levelWordText.color = notFoundColor;
-        letterArray = new string[levelWord.Length];
-        for (int i = 0; i < levelWord.Length; i++)
-            letterArray[i] = levelWord[i].ToString();
+        SetupLevelText();
         pauseMenu.SetActive(false);
         settingsMenu.SetActive(false);
     }
@@ -49,6 +46,15 @@ public class UIManager : MonoBehaviour
         pauseMenu.SetActive(GameManager.Instance.IsPaused);
     }
 
+    private void SetupLevelText()
+    {
+        levelWord = LevelManager.Instance.LevelWord;
+        levelWordText.text = levelWord;
+        levelWordText.color = notFoundColor;
+        letterArray = new string[levelWord.Length];
+        for (int i = 0; i < levelWord.Length; i++)
+            letterArray[i] = levelWord[i].ToString();
+    }
 
     public void OnLetterCollect(LetterClass letter)
     {
@@ -68,10 +74,4 @@ public class UIManager : MonoBehaviour
         }
         return s;
     }
-
-    private void OnDisable()
-    {
-        //PlayerManager.Instance.OnLetterCollect -= OnLetterCollect;
-    }
-
 }
