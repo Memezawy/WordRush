@@ -13178,6 +13178,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1944885828091991486, guid: 679c9ca7d853b5d47aa59b781b6b086c, type: 3}
+      propertyPath: LetterCollectEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1691389616}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 679c9ca7d853b5d47aa59b781b6b086c, type: 3}
 --- !u!1001 &2051346331693293590

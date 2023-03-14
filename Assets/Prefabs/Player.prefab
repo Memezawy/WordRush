@@ -111,6 +111,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!50 &1944885828091991480
 Rigidbody2D:
   serializedVersion: 4
@@ -177,7 +178,6 @@ MonoBehaviour:
     m_Bits: 64
   _groundDistance: 0.8
   _speed: 10
-  _linerDrag: 1
   _jumpForce: 13
   _minJumpVelocity: 3
   _fallSpeed: 75
@@ -208,3 +208,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19fb510e33b6cc24387a462636bc766c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LetterCollectEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        m_MethodName: OnLetterCollect
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1944885828091991484}
+        m_TargetAssemblyTypeName: PlayerAudioManager, Assembly-CSharp
+        m_MethodName: PlayCollectSound
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

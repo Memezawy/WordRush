@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-public class LetterClass : MonoBehaviour
+public class LetterClass : MonoBehaviour, IInteractable
 {
     public char Letter;
     [SerializeField] private float animationSpeed, animationAplitude;
@@ -22,5 +22,14 @@ public class LetterClass : MonoBehaviour
     {
         var pos = new Vector2(originalPos.x, originalPos.y + Mathf.Sin(animationOffset + (Time.time * animationSpeed)) * animationAplitude);
         transform.position = pos;
+    }
+
+    public void Interact(GameObject player)
+    {
+        if (LevelManager.Instance.TryCollectLetter(this))
+        {
+            player.GetComponent<PlayerManager>().LetterCollectEvent.Invoke(this);
+            Destroy(gameObject);
+        }
     }
 }

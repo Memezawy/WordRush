@@ -15,7 +15,7 @@ public class UIManager : MonoBehaviour
 
     private void OnEnable()
     {
-        PlayerManager.Instance.OnLetterCollect += OnLetterCollect;
+        //PlayerManager.Instance.OnLetterCollect += OnLetterCollect;
     }
 
     private void Start()
@@ -50,7 +50,7 @@ public class UIManager : MonoBehaviour
     }
 
 
-    private void OnLetterCollect(LetterClass letter)
+    public void OnLetterCollect(LetterClass letter)
     {
         var letterIndex = levelWord.IndexOf(letter.Letter);
         var newString = $"<color=#{ColorUtility.ToHtmlStringRGBA(foundColor)}>{letter.Letter}</color>";
@@ -71,7 +71,7 @@ public class UIManager : MonoBehaviour
 
     private void OnDisable()
     {
-        PlayerManager.Instance.OnLetterCollect += OnLetterCollect;
+        //PlayerManager.Instance.OnLetterCollect -= OnLetterCollect;
     }
 
 }

@@ -1,11 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Events;
 using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
-    public event Action<LetterClass> OnLetterCollect;
+    public UnityEvent<LetterClass> LetterCollectEvent;
     public static PlayerManager Instance { get; private set; }
     private void Awake()
     {
@@ -15,18 +16,28 @@ public class PlayerManager : MonoBehaviour
             Destroy(gameObject);
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D _collider)
     {
-        Collider2D _collider = other;
+        var intactable = _collider.GetComponent<IInteractable>();
+        if (intactable != null)
+        {
+            intactable.Interact(gameObject);
+        }
+
         if (_collider.CompareTag("Letter"))
         {
             var _letter = _collider.GetComponent<LetterClass>();
-            var _isValid = LevelManager.Instance.TryCollectLetter(_letter);
-            if (_isValid)
-            {
-                OnLetterCollect(_letter);
-                Destroy(_collider.gameObject);
-            }
+
+        }
+
+    }
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        var collider = other.collider;
+        var intactable = collider.GetComponent<IInteractable>();
+        if (intactable != null)
+        {
+            intactable.Interact(gameObject);
         }
     }
 }

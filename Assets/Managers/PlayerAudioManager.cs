@@ -15,12 +15,7 @@ public class PlayerAudioManager : MonoBehaviour
             Destroy(gameObject);
     }
 
-    private void OnEnable()
-    {
-        PlayerManager.Instance.OnLetterCollect += PlayCollectSound;
-
-    }
-    private void PlayCollectSound(LetterClass _)
+    public void PlayCollectSound(LetterClass _)
     {
         SoundManager.Instance.PlaySound(collectSFX);
     }
@@ -34,10 +29,5 @@ public class PlayerAudioManager : MonoBehaviour
     public void PlayerJumpSound()
     {
         SoundManager.Instance.PlaySound(jumpSFX);
-    }
-
-    private void OnDisable()
-    {
-        PlayerManager.Instance.OnLetterCollect -= PlayCollectSound;
     }
 }
